@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "py-grafana-reporter"
-version = "0.1.0"
+version = "0.1.2"
 description = ""
 authors = ["YiZixuan <sqkkyzx@qq.com>"]
 readme = "README.md"
+packages = [
+    { include = "py_grafana_render" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
