@@ -6,7 +6,7 @@ from playwright.sync_api import sync_playwright
 
 
 class GrafanaRender:
-    def __init__(self, token: str, browser: Literal["chrome", "firefox"] = "firefox", remote_browser_ws: str = ""):
+    def __init__(self, token: str, browser: Literal["chromium", "firefox"] = "firefox", remote_browser_ws: str = ""):
         self.token:str = token
         self.browser_type = browser
         self.remote_browser_ws = remote_browser_ws
