@@ -18,6 +18,7 @@ class GrafanaRender:
             'Authorization': f'Bearer {self.token}'
         }
 
+
     def snapshot(self, url: str, width:int=762, height:int=300, auto_height=True,
                  auto_height_offset:int=150, hide_class:list = None,
                  filetype: Literal["jpeg", "png"]= "png", file_path:str = None) -> (str, bytes):
