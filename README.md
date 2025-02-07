@@ -4,7 +4,7 @@
 
 # 安装
 
-环境需要 playwright
+环境需要 playwright 或者远程 playwright
 
 ```bash
 pip instll playwright py-grafana-render
