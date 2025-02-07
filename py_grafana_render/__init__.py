@@ -6,9 +6,10 @@ from playwright.sync_api import sync_playwright
 
 
 class GrafanaRender:
-    def __init__(self, token: str, browser: Literal["chrome", "firefox"] = "firefox"):
+    def __init__(self, token: str, browser: Literal["chrome", "firefox"] = "firefox", remote_browser_ws: str = ""):
         self.token:str = token
-        self.browser_select = browser
+        self.browser_type = browser
+        self.remote_browser_ws = remote_browser_ws
 
         self._headers = {
             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange",
@@ -35,11 +36,10 @@ class GrafanaRender:
             - screenshot: 截图的字节流
         """
         with sync_playwright() as playwright:
-
-            if self.browser_select == "chrome":
-                browser = playwright.chromium.launch(headless=True)
+            if self.remote_browser_ws:
+                browser = playwright[self.browser_type].connect(self.remote_browser_ws)
             else:
-                browser = playwright.firefox.launch(headless=True)
+                browser = playwright[self.browser_type].launch(headless=True)
 
             browser_page = browser.new_page()
             browser_page.set_extra_http_headers(self._headers)
