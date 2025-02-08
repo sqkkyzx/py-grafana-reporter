@@ -21,9 +21,18 @@ from py_grafana_render import GrafanaRender
 
 # 此处传入 Grafana 服务账户的 Token
 gf = GrafanaRender(token="<your-grafana-service-token>", browser="firefox")
-title, image_bytes = gf.snapshot(
-    url="https://<your-domain>/d/<dashboard>?xxx=xxx&kiosk",
+
+gf_ws = GrafanaRender(token="<your-grafana-service-token>", browser="firefox", remote_browser_ws = "ws://<your-host>:port")
+
+# 本地安装了 playwright 浏览器
+image_bytes = gf.snapshot(
+    url="https://<your-domain>/d/<dashboard-uid>?xxx=xxx&kiosk",
     file_path="./test.png"
+)
+
+# 获取仪表盘信息
+dashboard_info = gf.get_dashboard_info(
+    url="https://<your-domain>/d/<dashboard-uid>"
 )
 ```
 
@@ -53,7 +62,6 @@ title, image_bytes = gf.snapshot(
 
 返回:
 
-- 标题：str 浏览器页面标题，需自行处理
 - 图片字节流：bytes 当不传入 file_path 时，可以自行存储字节流，比如发送到 s3 存储等。
 
 

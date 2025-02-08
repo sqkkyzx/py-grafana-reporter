@@ -1,8 +1,8 @@
 import logging
-import re
 from typing import Literal
 
 from playwright.sync_api import sync_playwright
+import httpx
 
 
 class GrafanaRender:
@@ -77,9 +77,15 @@ class GrafanaRender:
 
             non_display = ", ".join(hide_class) + " {display: none !important;}"
 
-            page_title = browser_page.title()
-
             screenshot:bytes = browser_page.screenshot(type=filetype, style=non_display, path=file_path)
 
             browser.close()
-        return page_title, screenshot
+        return screenshot
+
+    def get_dashboard_info(self, url:str, mid_str = 'd'):
+        url = url.replace(f'/{mid_str}/', '/api/dashboards/uid/')
+        url = url.split('?')[0]
+        headers = self._headers
+        headers["Accept"] = "application/json, text/plain, */*"
+        res = httpx.get(url, headers=self._headers).json()
+        return res
