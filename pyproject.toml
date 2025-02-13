@@ -1,19 +1,17 @@
-[tool.poetry]
+[project]
 name = "py-grafana-render"
-version = "0.1.4"
+version = "0.1.8"
 description = ""
-authors = ["YiZixuan <sqkkyzx@qq.com>"]
 readme = "README.md"
-packages = [
-    { include = "py_grafana_render" },
+authors = [
+    { name = "YiZixuan", email = "sqkkyzx@qq.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.28.1",
+    "playwright>=1.48.0",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-playwright = "^1.49"
-httpx = "*"
-
-
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
