@@ -1,69 +1,48 @@
-# 概述
+# 腾讯云对象存储与 Dagster 集成
 
-使用无头浏览器来截图 Grafana 页面实现渲染仪表盘图像的目的。
+该 Dagster 集成是为了更便捷的调用腾讯云对象存储，集成提供了一个 Dagster Resource，和一个 Op 。
 
-# 安装
-
-环境需要 playwright 或者远程 playwright
+## 安装
+要安装库，请使用 pip 。
 
 ```bash
-pip instll playwright py-grafana-render
-playwright install
-playwright install-dev
+pip install dagster-qcloud-cos==0.1.0-alpha -U
 ```
 
-# 使用
+## Resource
 
-在你的代码中引用：
+#### QcloudCosResource
+
+该资源返回一个 CosS3Client 类，该类是腾讯云官方 Python SDK 的类，可以查看 https://cloud.tencent.com/document/product/436/12269 了解使用方法。
+
+
+## OP
+
+#### 上传 5G 大小以内的文件并获取预签名的临时链接
 
 ```python
-from py_grafana_render import GrafanaRender
 
-# 此处传入 Grafana 服务账户的 Token
-gf = GrafanaRender(token="<your-grafana-service-token>", browser="firefox")
+from dagster_qcloud_cos import cos_op, QcloudCosResource
+from dagster import job, Definitions
 
-gf_ws = GrafanaRender(token="<your-grafana-service-token>", browser="firefox", remote_browser_ws = "ws://<your-host>:port")
 
-# 本地安装了 playwright 浏览器
-image_bytes = gf.snapshot(
-    url="https://<your-domain>/d/<dashboard-uid>?xxx=xxx&kiosk",
-    file_path="./test.png"
-)
-
-# 获取仪表盘信息
-dashboard_info = gf.get_dashboard_info(
-    url="https://<your-domain>/d/<dashboard-uid>"
+@job
+def upload_file():    
+    etag, presigned_url = cos_op.op_upload_file()
+    
+defs = Definitions(
+    jobs=[upload_file],
+    resources={"dingtalk_webhook": QcloudCosResource()}
 )
 ```
 
-### 参数说明
+###### 输入说明：
+- `key`: str, 上传文件KEY
+- `file`: bytes, 文件字节数据
+- `expired`: int, 预签名下载链接的过期时间，0 为不获取，默认为 0
+- `bucket`: str, bucket_id，默认为资源设置的bucket_id
 
-##### GrafanaRender
+###### 输出说明：
+- `etag`
+- `presigned_url`: 预签名下载链接，或空字符串
 
-| 参数名     | 必填 | 类型  | 默认值     | 说明                                       |
-|---------|----|-----|---------|------------------------------------------|
-| token   | 是  | str |         | Grafana 服务账户的 Token                      |
-| browser |    | str | firefox | 使用的无头浏览器，可选值：<br/>- chrome<br/>- firefox | 
-
-##### snapshot
-
-参数：
-
-| 参数名                | 必填 | 类型   | 默认值  | 说明                                           |
-|--------------------|----|------|------|----------------------------------------------|
-| url                | 是  | str  |      | Grafana 的页面，可以包含查询字符串，不限仪表盘或面板。              |
-| width              |    | int  | 762  | 截图宽度。                                        | 
-| height             |    | int  | 300  | 截图高度。若开启自动高度，则仪表盘将使用自动高度。                    | 
-| auto_height        |    | bool | True | 自动获取实际高度，如果无法自动获取，仅会使用默认高度。面板不会自动获取高度。       | 
-| auto_height_offset |    | int  | 150  | 自动获取的高度，会因为存在顶部筛选器导致误差，使用该值对自动高度进行一定偏移。      | 
-| hide_class         |    | list | None | 隐藏的样式选择器列表，比如 .css-k3l5qq 是 v11.3.1 的顶部筛选器栏。 | 
-| filetype           |    | str  | png  | 可选 png 或 jpeg                                | 
-| file_path          |    | str  | None | 截图文件保存路径，需要包括文件名的完整路径。可以不传入，获取返回的字节流后自行保存。   | 
-
-返回:
-
-- 图片字节流：bytes 当不传入 file_path 时，可以自行存储字节流，比如发送到 s3 存储等。
-
-
-> 提示：
-> 若希望全屏，需要自行在 url 中加入 kiosk 查询字符串。

@@ -8,8 +8,8 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-    "httpx>=0.28.1",
-    "playwright>=1.48.0",
+    "httpx",
+    "playwright",
 ]
 
 [build-system]

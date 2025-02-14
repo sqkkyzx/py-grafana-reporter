@@ -6,10 +6,11 @@ import httpx
 
 
 class GrafanaRender:
-    def __init__(self, token: str, browser: Literal["chromium", "firefox"] = "firefox", remote_browser_ws: str = ""):
+    def __init__(self, token: str, browser: Literal["chromium", "firefox"] = "firefox", remote_browser_ws: str = "", base_url:str = ""):
         self.token:str = token
         self.browser_type = browser
         self.remote_browser_ws = remote_browser_ws
+        self.base_url = base_url.rstrip('/')
 
         self._headers = {
             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange",
@@ -19,11 +20,13 @@ class GrafanaRender:
         }
 
 
-    def snapshot(self, url: str, width:int=762, height:int=300, auto_height=True,
+    def snapshot(self, url: str = "", uid = "", query_string = None, width:int=762, height:int=300, auto_height=True,
                  auto_height_offset:int=150, hide_class:list = None,
                  filetype: Literal["jpeg", "png"]= "png", file_path:str = None) -> (str, bytes):
         """
 
+        :param uid: 仪表盘 UID
+        :param query_string: 查询参数字符串，必须以 ? 开头
         :param url: 截图页面
         :param width: 截图宽度
         :param height: 截图高度
@@ -36,6 +39,16 @@ class GrafanaRender:
             - page_title: 页面标题
             - screenshot: 截图的字节流
         """
+        if not url:
+            if not uid:
+                raise "必须提供 url 参数 或 uid 参数"
+            if not self.base_url:
+                raise "使用 uid 参数时，必须提供 base_url"
+            if query_string and query_string[0] != "?":
+                query_string = "?" + query_string
+
+            url = self.base_url + self.get_dashboard_info(uid).get("meta").get("url") + query_string
+
         with sync_playwright() as playwright:
             if self.remote_browser_ws:
                 browser = playwright[self.browser_type].connect(self.remote_browser_ws)
@@ -82,9 +95,10 @@ class GrafanaRender:
             browser.close()
         return screenshot
 
-    def get_dashboard_info(self, url:str, mid_str = 'd'):
-        url = url.replace(f'/{mid_str}/', '/api/dashboards/uid/')
-        url = url.split('?')[0]
+    def get_dashboard_info(self, uid:str) -> dict:
+        if not self.base_url:
+            raise "必须提供 base_url"
+        url =  f'{self.base_url}/api/dashboards/uid/{uid}'
         headers = self._headers
         headers["Accept"] = "application/json, text/plain, */*"
         res = httpx.get(url, headers=self._headers).json()
