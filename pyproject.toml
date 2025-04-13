@@ -1,6 +1,6 @@
 [project]
 name = "py-grafana-render"
-version = "0.1.9"
+version = "0.1.10"
 description = ""
 readme = "README.md"
 authors = [
