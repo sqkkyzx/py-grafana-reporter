@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f36b02-8c1d-402a-8ad4-ae0787fd5979" name="更改" comment="." />
+    <list default="true" id="95f36b02-8c1d-402a-8ad4-ae0787fd5979" name="更改" comment=".">
+      <change beforePath="$PROJECT_DIR$/src/py_grafana_render/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/py_grafana_render/__init__.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +50,7 @@
     "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "<未知>",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/PycharmProjects/blsy-dagster",
     "node.js.detected.package.eslint": "true",
@@ -175,7 +177,7 @@
       <workItem from="1739460093672" duration="2314000" />
       <workItem from="1739464565146" duration="3000" />
       <workItem from="1739539349948" duration="256000" />
-      <workItem from="1744532090892" duration="818000" />
+      <workItem from="1744532090892" duration="1023000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -305,11 +307,30 @@
       <option name="project" value="LOCAL" />
       <updated>1739539596452</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary=".">
+      <option name="closed" value="true" />
+      <created>1744533034674</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1744533034674</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>

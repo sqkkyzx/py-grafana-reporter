@@ -20,9 +20,6 @@ class GrafanaRender:
             'Authorization': f'Bearer {self.token}'
         }
 
-        if not self.remote_browser_ws and not self.remote_browser_cdp:
-            raise "remote_browser_ws 或 remote_browser_cdp 至少提供一个"
-
 
     def snapshot(self, url: str = "", uid = "", query_string = None, width:int=762, height:int=300, auto_height=True,
                  auto_height_offset:int=150, hide_class:list = None, data_load_timeout = 5000,
@@ -57,6 +54,8 @@ class GrafanaRender:
         with sync_playwright() as playwright:
             if self.remote_browser_ws:
                 browser = playwright[self.browser_type].connect(self.remote_browser_ws)
+            elif self.remote_browser_cdp:
+                browser = playwright[self.browser_type].connect_over_cdp(self.remote_browser_cdp)
             else:
                 browser = playwright[self.browser_type].launch(headless=True)
 
