@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f36b02-8c1d-402a-8ad4-ae0787fd5979" name="更改" comment=".">
-      <change beforePath="$PROJECT_DIR$/src/py_grafana_render/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/py_grafana_render/__init__.py" afterDir="false" />
+    <list default="true" id="95f36b02-8c1d-402a-8ad4-ae0787fd5979" name="更改" comment="新增 cdp 连接模式">
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +177,7 @@
       <workItem from="1739460093672" duration="2314000" />
       <workItem from="1739464565146" duration="3000" />
       <workItem from="1739539349948" duration="256000" />
-      <workItem from="1744532090892" duration="1023000" />
+      <workItem from="1744532090892" duration="1097000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -315,7 +315,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744533034674</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="新增 cdp 连接模式">
+      <option name="closed" value="true" />
+      <created>1744533179702</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1744533179702</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,7 +346,8 @@
     </ignored-roots>
     <MESSAGE value="变更目录结构改为 uv 进行项目管理" />
     <MESSAGE value="." />
-    <option name="LAST_COMMIT_MESSAGE" value="." />
+    <MESSAGE value="新增 cdp 连接模式" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增 cdp 连接模式" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/py_grafana_reporter$test.coverage" NAME="test 覆盖结果" MODIFIED="1734417120844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
